@@ -108,7 +108,52 @@ Present results as a clean summary with counts and key metrics.
 
 ---
 
-## 6. Workflow Execution Pattern
+## 6. Intent Routing — Match User Request to Command
+
+When a user mentions a client or domain, route to the right command based on how specific they are.
+
+### Broad requests → Run the full command
+
+| User says… | Run |
+|------------|-----|
+| "tell me about {client}" / "look at this client" / "what do we have for {domain}" / "deep dive" / "full report" | **`/business-report`** — pulls OTTO, brand vault, content, Site Explorer, GBP, PPC, LLM visibility, and gives recommendations |
+| "show me my account" / "what clients do I have" / "list everything" | **`/my-account`** — all businesses, projects, campaigns, GBP locations, quota |
+| "set up a new client" / "onboard {client}" | **`/onboard-client`** — guided wizard |
+
+### Specific requests → Run only what they ask for
+
+| User says… | Run directly (no full report) |
+|------------|-------------------------------|
+| "show me their keywords" / "what do they rank for" | `organic` → `get_organic_keywords` |
+| "check their backlinks" | `backlinks` → `get_site_backlinks` + `get_site_referring_domains` |
+| "SEO health" / "pillar scores" | `holistic_audit` → `get_holistic_seo_pillar_scores` |
+| "GBP profile" / "Google Business" | `gbp_locations_crud` → `get_location` |
+| "GBP stats" / "GBP performance" | `gbp_locations_crud` → `get_location_stats` |
+| "brand vault" / "brand voice" | `brand_vault` → `retrieve_brand_vault_details` |
+| "articles" / "content status" | `content_retrieval` → `get_article_summary` or `get_project_articles` |
+| "PPC campaigns" / "ad performance" | `campaign` → `list_campaigns_with_metrics` |
+| "AI visibility" / "LLM mentions" | `visibility` → `get_brand_overview` |
+| "competitors" | `organic` → `get_organic_competitors` |
+| "quota" / "how much do I have left" | `quota_management` → `show_otto_quota` |
+
+### Action requests → Run the workflow
+
+| User says… | Run |
+|------------|-----|
+| "run SEO" / "do SEO for {client}" / "monthly maintenance" | **`/run-seo`** |
+| "optimize their GBP" / "fix their Google profile" | **`/run-gbp`** |
+| "launch ads" / "set up PPC" / "Google Ads campaign" | **`/run-ppc`** |
+| "create content" / "write articles" / "build topical map" | **`/run-content`** |
+| "press release" / "build authority" / "link building" | **`/run-pr`** |
+| "check AI visibility" / "LLM audit" | **`/run-visibility`** |
+| "post to Slack" / "share results" | **`/send-slack`** |
+| "post to Circle" | **`/send-circle`** |
+
+**Rule of thumb:** If the user is vague about a client, give them the full picture (`/business-report`). If they ask for something specific, don't flood them with everything — just answer what they asked.
+
+---
+
+## 7. Workflow Execution Pattern
 
 When running a workflow (e.g., `/run-seo`):
 
@@ -127,7 +172,7 @@ When running a workflow (e.g., `/run-seo`):
 
 ---
 
-## 7. Slash Commands
+## 8. Slash Commands
 
 All commands live in `commands/` as markdown files. They are installed to `~/.claude/commands/` via `setup.sh`.
 
@@ -148,7 +193,7 @@ All commands live in `commands/` as markdown files. They are installed to `~/.cl
 
 ---
 
-## 8. Communication Integrations
+## 9. Communication Integrations
 
 ### Slack
 Uses Incoming Webhooks. The webhook URL is stored in `.env` as `SLACK_WEBHOOK_URL`.
@@ -160,7 +205,7 @@ Script: `integrations/circle/post-to-space.sh`
 
 ---
 
-## 9. Important Conventions
+## 10. Important Conventions
 
 - **Never fabricate data** — If a tool call fails, report the failure honestly
 - **Always confirm before destructive actions** — Creating campaigns, publishing content, etc.
