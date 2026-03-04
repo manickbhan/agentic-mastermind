@@ -6,7 +6,7 @@ Complete catalog of all SearchAtlas MCP tool groups and operations.
 
 ---
 
-## OTTO SEO (9 tool groups, ~42 operations)
+## OTTO SEO (10 tool groups, ~45 operations)
 
 ### `project_management` — 13 operations
 Project lifecycle, crawl settings, installation, exports.
@@ -48,8 +48,14 @@ Project lifecycle, crawl settings, installation, exports.
 - `select_urls_for_indexing` — submit URLs for instant indexing
 - `get_indexing_sitemaps` / `add_indexing_sitemap` / `delete_indexing_sitemap` / `toggle_sitemap_indexing`
 
-### `knowledge_graph` — 3 operations
+### `brand_vault` — 17+ operations
+Brand vault management + knowledge graph.
+- `list_brand_vaults` / `create_brand_vault` / `retrieve_brand_vault_details` / `update_brand_vault`
+- `archive_brand_vault` / `restore_brand_vault` / `list_archived_brand_vaults`
+- `get_brand_vault_business_info` / `update_brand_vault_business_info`
+- `get_brand_vault_overview` / `get_brand_vault_index_status` / `ask_brand_vault`
 - `get_knowledge_graph` / `update_knowledge_graph` / `update_refine_prompt`
+- `list_voice_profiles` / `list_voice_templates` / `select_voice_profile`
 
 ### `image_upload` — 1 operation
 - `upload_image` — upload an image for use in OTTO
@@ -57,9 +63,17 @@ Project lifecycle, crawl settings, installation, exports.
 ### `quota_management` — 2 operations
 - `get_otto_quota` / `show_otto_quota` — check usage limits
 
+### `seo_analysis` — 4 operations
+Detailed SEO issue analysis and recommendations.
+- `generate_bulk_recommendations` / `generate_single_recommendation`
+- `get_project_issues_summary` / `get_website_issues_by_type`
+
 ---
 
 ## Site Explorer (8 tool groups, ~40 operations)
+
+### `projects` — 4 operations
+- `list_sites` / `create_site_explorer` / `get_site_explorer_details` / `delete_site_explorer`
 
 ### `organic` — 6 operations
 - `get_organic_keywords` — top ranking keywords
@@ -96,15 +110,12 @@ Project lifecycle, crawl settings, installation, exports.
 ### `brand_signals` — 2 operations
 - `submit_brand_signal_score` / `retrieve_brand_signal_score`
 
-### `seo_analysis` — 1 operation
+### `holistic_audit` — 1 operation
 - `get_holistic_seo_pillar_scores` — Technical, Content, Authority, UX pillar scores
-
-### `projects` — 4 operations
-- `list_sites` / `create_site_explorer` / `get_site_explorer_details` / `delete_site_explorer`
 
 ---
 
-## Content Genius (5 tool groups, ~66 operations)
+## Content Genius (5 tool groups, ~51 operations)
 
 ### `content_generation` — 9 operations
 The 4-step article workflow:
@@ -140,17 +151,15 @@ WordPress and CMS publishing:
 - `get_article_publication_status` / `list_published_articles` / `list_scheduled_articles`
 - `get_article_details` / `get_current_datetime_approx`
 
-### `brand_vault` — 17 operations
-- `list_brand_vaults` / `create_brand_vault` / `retrieve_brand_vault_details` / `update_brand_vault`
-- `archive_brand_vault` / `restore_brand_vault` / `list_archived_brand_vaults`
-- `get_brand_vault_business_info` / `update_brand_vault_business_info`
-- `get_brand_vault_overview` / `get_brand_vault_index_status` / `ask_brand_vault`
-- `get_knowledge_graph` / `update_knowledge_graph`
-- `list_voice_profiles` / `list_voice_templates` / `select_voice_profile`
+### `topical_maps` — 2 operations
+- `create_topical_map` / `search_topical_maps`
 
 ---
 
-## Google Business Profile (9 tool groups, ~44 operations)
+## Google Business Profile (12 tool groups, ~49 operations)
+
+### `gbp_connection` — 2 operations
+- `all_available_locations` / `manage_connections`
 
 ### `gbp_locations_crud` — 9 operations
 - `list_locations` / `get_location` / `update_location` / `load_location`
@@ -160,17 +169,17 @@ WordPress and CMS publishing:
 ### `gbp_locations_deployment` — 3 operations
 - `deploy_location` / `bulk_deploy_locations` / `suggest_description`
 
-### `gbp_locations_recommendations` — AI-powered profile improvements
-- `generate_recommendations` / `bulk_apply_recommendations`
+### `gbp_locations_recommendations` — 2 operations
+- `generate_location_recommendations` / `bulk_apply_location_recommendations`
 
-### `gbp_locations_categories_crud` — category management
-- `update_primary_category` / `update_additional_categories`
+### `gbp_locations_categories_crud` — 2+ operations
+- `replace_primary_category` / `bulk_add_additional_categories`
 
-### `gbp_locations_services_crud` — service management
-- `add_service` / `update_service` / `delete_service`
+### `gbp_locations_services_crud` — 1+ operations
+- `bulk_upsert_standard_services`
 
-### `gbp_locations_attributes_crud` — attribute management
-- `get_available_attributes` / `set_attributes`
+### `gbp_locations_attributes_crud` — 2+ operations
+- `list_attributes` / `bulk_upsert_attributes`
 
 ### `gbp_posts_crud` — 8 operations
 - `list_posts` / `get_post` / `update_post` / `publish_post` / `unpublish_post`
@@ -183,10 +192,16 @@ WordPress and CMS publishing:
 - `get_automated_posting_settings` / `update_automated_posting_settings`
 - `enable_automated_posting` / `disable_automated_posting`
 
+### `gbp_posts_social` — 3 operations
+- `list_facebook_pages` / `list_instagram_accounts` / `list_twitter_accounts`
+
 ### `gbp_reviews` — 10 operations
 - `list_reviews` / `get_review` / `update_review_reply` / `publish_review_reply` / `unpublish_review_reply`
 - `ai_generate_review_reply` / `get_review_reply_stats` / `get_review_star_rating_stats`
 - `get_review_reply_automation_settings` / `update_review_reply_automation_settings`
+
+### `gbp_utility` — 2 operations
+- `bulk_import_locations_entity` / `generate_share_hash`
 
 ---
 
@@ -267,7 +282,7 @@ WordPress and CMS publishing:
 
 ---
 
-## Otto PPC / Smart Ads (7 tool groups, ~39 operations)
+## PPC / Smart Ads (8 tool groups, ~47 operations)
 
 ### `ads_account_crud` — 5 operations
 - `list` / `get` / `update` / `delete` / `get_customer_ads_accounts`
@@ -278,6 +293,11 @@ WordPress and CMS publishing:
 
 ### `business_crud` — 6 operations
 - `list` / `get` / `create` / `update` / `delete` / `validate_business`
+
+### `business_mgmt` — 8 operations
+- `generate_form_suggestions` / `create_products` / `geo_search`
+- `get_business_overview` / `get_business_metrics` / `get_business_recommendations`
+- `export_business_data` / `duplicate_business`
 
 ### `campaign` — 4 operations
 - `list_campaigns_with_metrics` / `list_campaign_performance`
@@ -298,19 +318,27 @@ WordPress and CMS publishing:
 
 ---
 
+## GSC (Google Search Console)
+
+### `GSC_Performance_Tool` — 1+ operations
+- `get_performance` — search performance data
+
+---
+
 ## Summary
 
 | Category | Tool Groups | Operations |
 |----------|-------------|------------|
-| OTTO SEO | 9 | ~42 |
+| OTTO SEO | 10 | ~45 |
 | Site Explorer | 8 | ~40 |
-| Content Genius | 5 | ~66 |
-| GBP | 9 | ~44 |
+| Content Genius | 5 | ~51 |
+| GBP | 12 | ~49 |
 | Local SEO | 2 | ~14 |
 | Press Releases | 3 | ~12 |
 | Cloud Stacks | 2 | ~9 |
 | Digital PR | 3 | ~17 |
 | AI Visibility | 4 | ~19 |
 | Website Studio | 1 | ~6 |
-| Otto PPC | 7 | ~39 |
-| **Total** | **~53** | **~308** |
+| PPC (Smart Ads) | 8 | ~47 |
+| GSC | 1 | ~1 |
+| **Total** | **~59** | **~310** |

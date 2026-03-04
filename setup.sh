@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Agentic Marketing Mastermind — Setup Script
-# Installs slash commands to ~/.claude/commands/ for use in Claude Code
+# Installs slash commands and runs the interactive setup wizard.
 
 set -e
 
@@ -11,10 +11,10 @@ COMMANDS_DST="$HOME/.claude/commands"
 echo "=== Agentic Marketing Mastermind Setup ==="
 echo ""
 
-# Create commands directory if it doesn't exist
+# ── 1. Install slash commands ────────────────────────────────────────────────
+
 mkdir -p "$COMMANDS_DST"
 
-# Copy all command files
 if [ -d "$COMMANDS_SRC" ] && [ "$(ls -A "$COMMANDS_SRC" 2>/dev/null)" ]; then
     cp "$COMMANDS_SRC"/*.md "$COMMANDS_DST/" 2>/dev/null || true
     echo "Installed commands:"
@@ -24,31 +24,43 @@ if [ -d "$COMMANDS_SRC" ] && [ "$(ls -A "$COMMANDS_SRC" 2>/dev/null)" ]; then
     done
 else
     echo "No commands found in $COMMANDS_SRC"
-    echo "Commands will be available after they are created."
 fi
 
 echo ""
 
-# Check for .env
-if [ ! -f "$SCRIPT_DIR/.env" ]; then
-    echo "NOTE: No .env file found."
-    echo "  Copy .env.example to .env and add your SearchAtlas API key:"
-    echo "  cp .env.example .env"
-    echo ""
-fi
+# ── 2. Run interactive setup wizard ─────────────────────────────────────────
 
-# Check for MCP configuration
-SETTINGS_FILE="$HOME/.claude/settings.json"
-if [ -f "$SETTINGS_FILE" ]; then
-    if grep -q "searchatlas" "$SETTINGS_FILE" 2>/dev/null; then
-        echo "SearchAtlas MCP server found in Claude Code settings."
+WIZARD="$SCRIPT_DIR/scripts/setup-interactive.sh"
+
+if [ -f "$WIZARD" ]; then
+    if [ ! -f "$SCRIPT_DIR/.env" ]; then
+        echo "No .env file found — launching setup wizard..."
+        echo ""
+        bash "$WIZARD"
     else
-        echo "NOTE: SearchAtlas MCP server not found in Claude Code settings."
-        echo "  See docs/MCP_SETUP.md for configuration instructions."
+        echo ".env already exists. To reconfigure, run:"
+        echo "  bash scripts/setup-interactive.sh"
+        echo ""
+
+        # Still check MCP config
+        SETTINGS_FILE="$HOME/.claude/settings.json"
+        CLAUDE_JSON="$HOME/.claude.json"
+        if [ -f "$SETTINGS_FILE" ] && grep -q "searchatlas" "$SETTINGS_FILE" 2>/dev/null; then
+            echo "SearchAtlas MCP server found in Claude Code settings."
+        elif [ -f "$CLAUDE_JSON" ] && grep -q "searchatlas" "$CLAUDE_JSON" 2>/dev/null; then
+            echo "SearchAtlas MCP server found in Claude Code config."
+        else
+            echo "NOTE: SearchAtlas MCP server not configured."
+            echo "  See docs/MCP_SETUP.md or re-run: bash scripts/setup-interactive.sh"
+        fi
     fi
 else
-    echo "NOTE: Claude Code settings file not found at $SETTINGS_FILE"
-    echo "  See docs/MCP_SETUP.md for configuration instructions."
+    # Fallback: manual setup guidance
+    if [ ! -f "$SCRIPT_DIR/.env" ]; then
+        echo "NOTE: No .env file found."
+        echo "  Copy .env.example to .env and add your SearchAtlas API key:"
+        echo "  cp .env.example .env"
+    fi
 fi
 
 echo ""

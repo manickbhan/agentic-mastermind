@@ -21,7 +21,7 @@ ids:
 # ── Configuration ─────────────────────────────────────────────────────────────
 config:
   press_release:
-    topic: ""                       # e.g. "Anne Therese Opens Second Location in Cape Coral"
+    topic: ""                       # e.g. "Acme Co Launches New Service Line"
     angle: ""                       # e.g. "expansion", "award", "new service launch"
     target_keywords: []             # SEO keywords to weave in
     distribution_network: premium   # standard | premium | elite

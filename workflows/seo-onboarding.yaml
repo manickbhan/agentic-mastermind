@@ -7,8 +7,8 @@ version: "1.0"
 description: "Full SEO onboarding — project setup, audit, brand vault, keyword research, topical map, first content batch"
 
 # ── Client Info ───────────────────────────────────────────────────────────────
-client: ""                          # e.g. "Anne Therese Aesthetic Medicine"
-domain: ""                          # e.g. "annetherese.com"
+client: ""                          # e.g. "Acme Digital Marketing"
+domain: ""                          # e.g. "example-client.com"
 period: ""                          # e.g. "2026-02"
 status: pending                     # pending | in_progress | completed
 
@@ -22,9 +22,9 @@ ids:
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 config:
-  pillar_keyword: ""                # e.g. "aesthetic medicine cape coral"
-  pillar_url: ""                    # e.g. "https://annetherese.com/services"
-  target_location: ""               # e.g. "Cape Coral, FL"
+  pillar_keyword: ""                # e.g. "digital marketing services austin"
+  pillar_url: ""                    # e.g. "https://example-client.com/services"
+  target_location: ""               # e.g. "Austin, TX"
   articles_to_generate: 4           # how many articles in first batch
   voice_profile: ""                 # leave blank to use brand default
 
