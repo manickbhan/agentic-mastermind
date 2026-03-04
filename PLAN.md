@@ -6,107 +6,54 @@
 ## Status
 
 - [x] Phase 1: Foundation (.gitignore, .env.example, LICENSE, README, CLAUDE.md, setup.sh)
-- [ ] Phase 2: Core Skills (commands/)
-- [ ] Phase 3: Workflow Templates (workflows/)
-- [ ] Phase 4: Communication Integrations (integrations/)
-- [ ] Phase 5: Documentation (docs/)
+- [x] Phase 2: Core Skills (commands/) — 12 slash commands
+- [x] Phase 3: Workflow Templates (workflows/) — 7 YAML templates
+- [x] Phase 4: Communication Integrations (integrations/) — Slack + Circle
+- [x] Phase 5: Documentation (docs/) — MCP setup, tool reference, golden rules, workflows guide
 
 ---
 
-## Phase 2: Core Skills — Commands to Build
+## What's Built
 
-Each command is a markdown file in `commands/` that Claude Code loads as a slash command.
+### Phase 2: Commands (12 files)
+- `/help` — command listing
+- `/my-account` — account discovery across all products
+- `/onboard-client` — guided onboarding wizard (the core skill)
+- `/business-report` — deep dive on one domain
+- `/run-seo` — SEO onboarding or monthly maintenance
+- `/run-gbp` — GBP optimization or monthly posts/reviews
+- `/run-ppc` — PPC campaign launch
+- `/run-content` — topical maps + article generation
+- `/run-pr` — press releases, cloud stacks, digital PR
+- `/run-visibility` — LLM visibility + sentiment audit
+- `/send-slack` — Slack webhook integration
+- `/send-circle` — Circle API integration
 
-### Priority Order
+### Phase 3: Workflows (7 files)
+- `seo-onboarding.yaml` — 7-step new client SEO setup
+- `monthly-seo.yaml` — 7-step monthly SEO cycle
+- `gbp-optimization.yaml` — 6-step GBP profile cleanup
+- `gbp-monthly.yaml` — 5-step GBP monthly maintenance
+- `ppc-launch.yaml` — 7-step PPC campaign launch
+- `authority-building.yaml` — 6-step PR + cloud stacks + digital PR
+- `llm-visibility.yaml` — 5-step LLM visibility audit
 
-1. **`/help`** — List all commands (simplest, do first)
-2. **`/my-account`** — Account discovery (foundation for everything else)
-3. **`/onboard-client`** — THE core skill (guided wizard)
-4. **`/business-report`** — Deep dive on one business
-5. **`/run-seo`** — SEO workflow execution
-6. **`/run-gbp`** — GBP workflow execution
-7. **`/run-ppc`** — PPC workflow execution
-8. **`/run-content`** — Content generation
-9. **`/run-pr`** — Press releases + authority building
-10. **`/run-visibility`** — LLM visibility audit
-11. **`/send-slack`** — Slack webhook integration
-12. **`/send-circle`** — Circle API integration
+### Phase 4: Integrations
+- Slack: `send-message.sh` + README
+- Circle: `post-to-space.sh` + README
 
-### Command Template Pattern
-
-Each command file should follow this structure:
-```markdown
-# /command-name
-
-Description of what the command does.
-
-## Instructions
-
-Step-by-step instructions for Claude to follow when this command is invoked.
-Reference MCP tools by name, use the golden rules from CLAUDE.md.
-
-## Output Format
-
-How to present results to the user.
-```
+### Phase 5: Documentation
+- `docs/MCP_SETUP.md` — connection guide with troubleshooting
+- `docs/TOOL_REFERENCE.md` — full catalog: 53 tool groups, ~308 operations
+- `docs/GOLDEN_RULES.md` — 10 hard-won rules for reliable MCP usage
+- `docs/WORKFLOWS.md` — template structure, variables, dependencies, execution guide
 
 ---
 
-## Phase 3: Workflow Templates — YAMLs to Port
+## Stretch Goals (not yet built)
 
-Port from `D:/SADEV/Orchestrator/plans/templates/` — sanitize all IDs, domains, staging refs.
-
-| Template | Source | Status |
-|----------|--------|--------|
-| seo-onboarding.yaml | new-client-seo.yaml | [ ] |
-| monthly-seo.yaml | monthly-seo.yaml | [ ] |
-| gbp-optimization.yaml | gbp-optimization.yaml | [ ] |
-| gbp-monthly.yaml | gbp-monthly.yaml | [ ] |
-| ppc-launch.yaml | ppc-launch.yaml | [ ] |
-| authority-building.yaml | authority-building.yaml | [ ] |
-| llm-visibility.yaml | llm-visibility.yaml | [ ] |
-
----
-
-## Phase 4: Communication Integrations
-
-| Integration | Status |
-|-------------|--------|
-| Slack (Incoming Webhook) | [ ] |
-| Circle (API v2) | [ ] |
-| Google Sheets (stretch) | [ ] |
-
----
-
-## Phase 5: Documentation
-
-| Doc | Status |
-|-----|--------|
-| docs/MCP_SETUP.md | [ ] |
-| docs/TOOL_REFERENCE.md | [ ] Port from Orchestrator tools-catalog.md |
-| docs/GOLDEN_RULES.md | [ ] Port from Orchestrator operational/golden-rules.md |
-| docs/WORKFLOWS.md | [ ] |
-
----
-
-## Source Material Locations
-
-- **Orchestrator**: `D:/SADEV/Orchestrator/` (Mac: `/Users/usuario/coding/Orquestrator/`)
-  - `tools-catalog.md` — 52 tool groups, ~287 operations
-  - `intent-mapping.md` — Keyword → tool routing
-  - `operational/golden-rules.md` — 7 hard-won rules
-  - `operational/ppc-campaign-playbook.md` — PPC strategy
-  - `plans/templates/*.yaml` — All 7 workflow templates
-
-- **MCP-agent**: `D:/SADEV/MCP-agent/`
-  - `AGENT_PLAYBOOK.md` — 537-line tool registry + golden rules
-  - `scripts/discover_tools.sh` — Schema discovery script
-  - `tools_list.json` — Full 112-tool registry (reference only)
-
-## Security Reminders
-
-- No API keys, tokens, or credentials
-- No staging URLs — production only
-- No specific account IDs, business IDs, domain names
-- No internal SearchAtlas engineering details
-- All examples use placeholders: `your-business.com`, `<your-api-key>`, `<project-id>`
+- [ ] Google Sheets integration (integrations/google/)
+- [ ] Topical Maps tool reference (in TOOL_REFERENCE.md — tool exists but wasn't in original catalog)
+- [ ] Example client plan files (plans/examples/)
+- [ ] Video walkthrough / demo recording
+- [ ] Schema discovery script (scripts/discover-tools.sh)

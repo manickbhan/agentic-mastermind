@@ -1,0 +1,37 @@
+# /help
+
+List all available Agentic Marketing Mastermind commands.
+
+## Instructions
+
+Display this command reference to the user:
+
+```
+🧠 Agentic Marketing Mastermind — Commands
+
+📊 ACCOUNT & REPORTING
+  /my-account          Show all businesses, projects, campaigns, and GBP locations
+  /business-report     Deep dive report on a single business
+
+🚀 ONBOARDING
+  /onboard-client      Guided new client onboarding wizard
+
+🔧 WORKFLOWS
+  /run-seo             SEO onboarding or monthly maintenance
+  /run-gbp             GBP profile optimization or monthly posts/reviews
+  /run-ppc             Build and launch a PPC campaign
+  /run-content         Generate articles from topical maps
+  /run-pr              Create and distribute press releases + authority building
+  /run-visibility      LLM visibility and sentiment analysis
+
+💬 COMMUNICATION
+  /send-slack          Post a message to Slack via webhook
+  /send-circle         Post to a Circle community space
+
+❓ HELP
+  /help                This command list
+```
+
+## Output Format
+
+Display the command table above using monospace formatting. Keep it clean — no extra explanation needed.
