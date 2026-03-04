@@ -135,6 +135,8 @@ Checks your `.env`, API key, file permissions, MCP config, and optionally tests 
 - [Intent Mapping](docs/INTENT_MAPPING.md) — Keyword-to-tool routing reference
 - [Golden Rules](docs/GOLDEN_RULES.md) — Best practices for reliable tool usage
 - [Workflows Guide](docs/WORKFLOWS.md) — How workflow templates work
+- [Setup Guide (printable)](docs/Agentic-Marketing-Mastermind-Setup-Guide.html) — Step-by-step onboarding with clickable links
+- [Setup Presentation](docs/Agentic-Marketing-Mastermind-Setup-Guide.pptx) — Slide deck for team walkthroughs
 
 ## Updating
 
