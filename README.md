@@ -10,7 +10,7 @@ AI-powered digital marketing toolkit for [SearchAtlas](https://searchatlas.com) 
 Clone, run the setup wizard, enter your API key.
 
 ```bash
-git clone https://gitlab.com/juan.villamil/agentic-mastermind.git
+git clone https://github.com/manickbhan/agentic-mastermind.git
 cd agentic-mastermind
 bash setup.sh
 ```
