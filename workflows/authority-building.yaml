@@ -115,7 +115,7 @@ steps:
 
   - id: 6
     name: "Monitor new backlinks"
-    tool: Site_Explorer_Backlinks_Tool
+    tool: backlinks
     operations:
       - op: get_site_backlinks
         params:

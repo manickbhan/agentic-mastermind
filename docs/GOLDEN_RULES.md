@@ -163,8 +163,73 @@ Every tool maps to a dashboard URL. Always include clickable links in output so 
 
 | Tool | Known Issue | Workaround |
 |------|------------|------------|
-| `BrandVaultTools` | Intermittent auth errors | Retry 2-3 times; if persistent, create vault manually in dashboard |
-| `OTTO_Knowledge_Graph` | Deprecated | Use `BrandVaultTools` → `get_knowledge_graph` / `update_knowledge_graph` instead |
+| `brand_vault` | Intermittent auth errors | Retry 2-3 times; if persistent, create vault manually in dashboard |
 | GBP `deploy_location` | Only works on verified locations | Check verification status first via `get_location` |
+| GBP `get_location_stats` | Returns empty for new/low-traffic locations | This is normal — stats populate over time after verification |
 | Content 4-step workflow | Each poll can take 30-60 seconds | Be patient — don't assume failure if polling takes time |
+| Content `search_articles` | Does not filter by domain | Articles aren't domain-tagged. Use `get_article_summary` or `filter_articles_by_status` instead |
+| PPC `business_crud` → `list` | Requires `google_ads_account_id` + `google_ads_client_id` | Call `ads_account_crud` → `list` first, then ask user to select an account |
 | PPC `bulk_create_keyword_clusters` | Async, can take several minutes | Poll `get_otto_ppc_task_status` — don't proceed until complete |
+| `project_management` | Tool name collision — may resolve to content project ops | If you get ops like `list_content_projects`, you hit the wrong tool. Use `OTTO_Installations` or `seo_analysis` for OTTO-specific work, or retry |
+
+---
+
+## Rule 11: Know the Parameter Names
+
+Parameter naming is **inconsistent across tools**. The same concept uses different param names depending on the tool group. Always use schema discovery (Rule 1), but here's a cheat sheet:
+
+### Brand Vault tools
+| Operation | Key Parameter | Name |
+|-----------|--------------|------|
+| `retrieve_brand_vault_details` | vault ID | `brand_vault_uuid` |
+| `get_brand_vault_business_info` | vault ID | `brand_vault_uuid` |
+| `get_knowledge_graph` | domain | `hostname` |
+| `get_brand_vault_overview` | domain | `hostname` |
+| `list_voice_profiles` | domain | `hostname` |
+
+**Pattern:** CRUD by UUID → uses `brand_vault_uuid`. Read-only by domain → uses `hostname`.
+
+### Site Explorer tools (`organic`, `backlinks`, `analysis`, `adwords`)
+All use `project_identifier` (not `domain`):
+```
+project_identifier: "example.com"    # domain works
+project_identifier: "https://..."    # full URL works
+project_identifier: "12345"          # project ID works
+```
+
+### GBP tools
+All use `location_id` (integer, from `list_locations`).
+
+### PPC tools
+- `business_crud` → `list` needs `google_ads_account_id` + `google_ads_client_id`
+- `product_crud` → uses `business_id`
+- `campaign` → uses `business_id`
+
+### OTTO tools
+- Most use `project_id` (the OTTO project UUID)
+- `holistic_audit` uses `domain` (plain domain string)
+
+---
+
+## Rule 12: Use Current Tool Names
+
+Legacy tool names from early MCP versions still appear in some documentation and workflow templates. The API accepts both, but prefer the current names:
+
+| Deprecated Name | Current Name |
+|----------------|-------------|
+| `BrandVaultTools` | `brand_vault` |
+| `OTTO_Project_Management` | `project_management` |
+| `OTTO_Audit_Management` | `audit_management` |
+| `OTTO_Knowledge_Graph` | `brand_vault` (use `get_knowledge_graph` op) |
+| `Site_Explorer_Holistic_Audit_Tool` | `holistic_audit` |
+| `Site_Explorer_Keyword_Research_Tool` | `keyword_research` |
+| `Site_Explorer_Backlinks_Tool` | `backlinks` |
+| `Content_Generation_Tool` | `content_generation` |
+| `Topical_Maps_Tools` | `topical_maps` |
+| `Visibility_Analysis_Tools` | `visibility` |
+| `Prompt_Simulator_Tools` | `prompt_simulator` |
+| `otto_ppc_business_crud` | `business_crud` |
+| `otto_ppc_product_crud` | `product_crud` |
+| `otto_ppc_campaign` | `campaign` |
+
+See [INTENT_MAPPING.md](INTENT_MAPPING.md) for the full deprecated → current mapping table.

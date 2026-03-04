@@ -32,7 +32,7 @@ config:
 steps:
   - id: 1
     name: "Create & verify OTTO project"
-    tool: OTTO_Project_Management
+    tool: project_management
     operations:
       - op: engage_otto_project
         params:
@@ -45,7 +45,7 @@ steps:
 
   - id: 2
     name: "Create site audit"
-    tool: OTTO_Audit_Management
+    tool: audit_management
     operations:
       - op: create_audit
         params:
@@ -56,7 +56,7 @@ steps:
 
   - id: 3
     name: "Get holistic SEO pillar scores"
-    tool: Site_Explorer_Holistic_Audit_Tool
+    tool: holistic_audit
     operations:
       - op: get_holistic_seo_pillar_scores
         params:
@@ -67,7 +67,7 @@ steps:
 
   - id: 4
     name: "Create brand vault + voice profile"
-    tool: BrandVaultTools
+    tool: brand_vault
     operations:
       - op: create_brand_vault
         params:
@@ -83,7 +83,7 @@ steps:
 
   - id: 5
     name: "Build keyword research project"
-    tool: Site_Explorer_Keyword_Research_Tool
+    tool: keyword_research
     operations:
       - op: create_keyword_research_project
         params:
@@ -96,7 +96,7 @@ steps:
 
   - id: 6
     name: "Create topical map from pillar keyword"
-    tool: Topical_Maps_Tools
+    tool: topical_maps
     operations:
       - op: create_topical_map
         params:
@@ -110,7 +110,7 @@ steps:
 
   - id: 7
     name: "Generate first article batch from topical map"
-    tool: Content_Generation_Tool
+    tool: content_generation
     description: "Run 4-step workflow per article: create → info retrieval → headings → generate"
     operations:
       - op: create_content_instance

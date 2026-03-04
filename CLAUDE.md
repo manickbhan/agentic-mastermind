@@ -75,7 +75,25 @@ Some short tool names map to multiple underlying tools. If a tool behaves unexpe
 
 ---
 
-## 4. Account Discovery Flow
+## 4. Parameter Quick Reference
+
+Parameter names are inconsistent across tools. **Always use schema discovery** (call with `params: {}` first), but here are the most common gotchas:
+
+| Tool Group | Param for "domain" | Param for "ID" |
+|------------|-------------------|----------------|
+| `brand_vault` (CRUD) | — | `brand_vault_uuid` |
+| `brand_vault` (read-only) | `hostname` | — |
+| `organic`, `backlinks`, `analysis` | `project_identifier` | `project_identifier` |
+| `holistic_audit` | `domain` | — |
+| `gbp_locations_crud` | — | `location_id` (integer) |
+| `business_crud` | — | `google_ads_account_id` + `google_ads_client_id` (for list) |
+| `project_management` | `project_id` (UUID) | `project_id` |
+
+**Known collision:** `project_management` may resolve to content project operations instead of OTTO operations. If you see `list_content_projects` instead of `list_otto_projects`, you've hit the wrong tool. Retry or use alternative discovery paths (brand vault data includes linked OTTO project IDs).
+
+---
+
+## 5. Account Discovery Flow
 
 When a user asks about their account, follow this order:
 
@@ -90,7 +108,7 @@ Present results as a clean summary with counts and key metrics.
 
 ---
 
-## 5. Workflow Execution Pattern
+## 6. Workflow Execution Pattern
 
 When running a workflow (e.g., `/run-seo`):
 
@@ -109,7 +127,7 @@ When running a workflow (e.g., `/run-seo`):
 
 ---
 
-## 6. Slash Commands
+## 7. Slash Commands
 
 All commands live in `commands/` as markdown files. They are installed to `~/.claude/commands/` via `setup.sh`.
 
@@ -130,7 +148,7 @@ All commands live in `commands/` as markdown files. They are installed to `~/.cl
 
 ---
 
-## 7. Communication Integrations
+## 8. Communication Integrations
 
 ### Slack
 Uses Incoming Webhooks. The webhook URL is stored in `.env` as `SLACK_WEBHOOK_URL`.
@@ -142,7 +160,7 @@ Script: `integrations/circle/post-to-space.sh`
 
 ---
 
-## 8. Important Conventions
+## 9. Important Conventions
 
 - **Never fabricate data** — If a tool call fails, report the failure honestly
 - **Always confirm before destructive actions** — Creating campaigns, publishing content, etc.
