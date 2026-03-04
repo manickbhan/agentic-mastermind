@@ -10,7 +10,7 @@ Send messages to Slack channels using Incoming Webhooks.
 4. Add it to your `.env` file:
 
 ```
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+SLACK_WEBHOOK_URL=your_slack_webhook_url_here
 ```
 
 ## Usage

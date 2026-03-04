@@ -10,7 +10,7 @@ Send emails via the [Resend](https://resend.com) API. Simple REST API, no SMTP c
 4. Add to your `.env`:
 
 ```
-RESEND_API_KEY=re_xxxxxxxxxxxxx
+RESEND_API_KEY=your_resend_api_key_here
 EMAIL_FROM=reports@yourdomain.com
 ```
 
