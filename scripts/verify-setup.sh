@@ -89,7 +89,41 @@ else
   errors=$((errors + 1))
 fi
 
-# ── Check 6 (optional): API connectivity ─────────────────────────────────────
+# ── Check 6: Slack webhooks ───────────────────────────────────────────────────
+
+if [[ -f "$ENV_FILE" ]]; then
+  SLACK_URL=$(grep -E '^SLACK_WEBHOOK_URL=' "$ENV_FILE" 2>/dev/null | head -1 | cut -d= -f2-)
+  SLACK_COUNT=$(grep -cE '^SLACK_WEBHOOK_' "$ENV_FILE" 2>/dev/null || echo "0")
+  if [[ -n "${SLACK_URL:-}" ]]; then
+    echo "$PASS Slack: configured ($SLACK_COUNT webhook(s))"
+  else
+    echo "$WARN Slack: not configured (optional — for /send-slack)"
+  fi
+fi
+
+# ── Check 7: Discord webhook ────────────────────────────────────────────────
+
+if [[ -f "$ENV_FILE" ]]; then
+  DISCORD_URL=$(grep -E '^DISCORD_WEBHOOK_URL=' "$ENV_FILE" 2>/dev/null | head -1 | cut -d= -f2-)
+  if [[ -n "${DISCORD_URL:-}" ]]; then
+    echo "$PASS Discord: configured"
+  else
+    echo "$WARN Discord: not configured (optional — for /send-discord)"
+  fi
+fi
+
+# ── Check 8: Email (Resend) ─────────────────────────────────────────────────
+
+if [[ -f "$ENV_FILE" ]]; then
+  RESEND_KEY=$(grep -E '^RESEND_API_KEY=' "$ENV_FILE" 2>/dev/null | head -1 | cut -d= -f2-)
+  if [[ -n "${RESEND_KEY:-}" ]]; then
+    echo "$PASS Email (Resend): configured"
+  else
+    echo "$WARN Email (Resend): not configured (optional — for /send-email)"
+  fi
+fi
+
+# ── Check 9 (optional): API connectivity ─────────────────────────────────────
 
 echo ""
 if [[ -n "${SA_API_KEY:-}" ]] && command -v curl &>/dev/null; then

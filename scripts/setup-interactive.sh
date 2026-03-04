@@ -16,7 +16,7 @@ echo ""
 
 # ── Step 1/4: SearchAtlas API Key (required) ─────────────────────────────────
 
-echo "Step 1/4: SearchAtlas API Key (REQUIRED)"
+echo "Step 1/3: SearchAtlas API Key (REQUIRED)"
 echo "  Get yours at: https://searchatlas.com -> Settings -> API Keys"
 echo ""
 
@@ -32,27 +32,78 @@ read -s -p "  Staging API key (Enter to skip): " SA_STAGING_API_KEY
 echo ""
 echo ""
 
-# ── Step 2/4: Slack Webhook (optional) ───────────────────────────────────────
+# ── Step 2/3: Communication Channels (optional) ─────────────────────────────
 
-echo "Step 2/4: Slack Webhook URL (optional — for /send-slack)"
-echo "  Create one at: https://api.slack.com/messaging/webhooks"
+echo "Step 2/3: Communication Channels (optional)"
+echo "  Where do you share results with clients?"
+echo "  [1] Slack     — webhook URL per channel"
+echo "  [2] Discord   — webhook URL"
+echo "  [3] Email     — Resend API key"
+echo "  [4] Circle    — API key + community ID"
+echo "  [s] Skip for now"
 echo ""
 
-read -p "  Slack Webhook URL (Enter to skip): " SLACK_WEBHOOK_URL
+read -p "  Select (comma-separated, e.g. 1,3): " CHANNEL_SELECTION
 echo ""
 
-# ── Step 3/4: Circle API (optional) ─────────────────────────────────────────
-
-echo "Step 3/4: Circle Community API (optional — for /send-circle)"
-echo "  Get your key at: https://app.circle.so -> Settings -> API"
-echo ""
-
-read -p "  Circle API Key (Enter to skip): " CIRCLE_API_KEY
+# Initialize all vars
+SLACK_WEBHOOK_URL=""
+SLACK_EXTRA_WEBHOOKS=""
+DISCORD_WEBHOOK_URL=""
+RESEND_API_KEY=""
+EMAIL_FROM=""
+CIRCLE_API_KEY=""
 CIRCLE_COMMUNITY_ID=""
-if [[ -n "${CIRCLE_API_KEY:-}" ]]; then
-  read -p "  Circle Community ID: " CIRCLE_COMMUNITY_ID
+
+# Parse selections
+if [[ "$CHANNEL_SELECTION" != "s" && -n "$CHANNEL_SELECTION" ]]; then
+  IFS=',' read -ra SELECTIONS <<< "$CHANNEL_SELECTION"
+  for sel in "${SELECTIONS[@]}"; do
+    sel=$(echo "$sel" | tr -d ' ')
+    case "$sel" in
+      1)
+        echo "  Slack:"
+        read -p "    Channel name (e.g. client-reports): " SLACK_CHANNEL_NAME
+        read -p "    Webhook URL: " SLACK_WEBHOOK_URL
+        SLACK_EXTRA_WEBHOOKS=""
+        while true; do
+          read -p "    Add another Slack channel? (y/n): " ADD_MORE
+          if [[ "$ADD_MORE" == "y" || "$ADD_MORE" == "Y" ]]; then
+            read -p "    Channel name: " EXTRA_NAME
+            read -p "    Webhook URL: " EXTRA_URL
+            EXTRA_NAME_UPPER=$(echo "$EXTRA_NAME" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
+            SLACK_EXTRA_WEBHOOKS="${SLACK_EXTRA_WEBHOOKS}SLACK_WEBHOOK_${EXTRA_NAME_UPPER}=${EXTRA_URL}\n"
+          else
+            break
+          fi
+        done
+        echo ""
+        ;;
+      2)
+        echo "  Discord:"
+        echo "    Create a webhook at: Server Settings → Integrations → Webhooks"
+        read -p "    Webhook URL: " DISCORD_WEBHOOK_URL
+        echo ""
+        ;;
+      3)
+        echo "  Email (Resend):"
+        echo "    Sign up at: https://resend.com → API Keys"
+        read -p "    API key: " RESEND_API_KEY
+        read -p "    Default \"from\" address: " EMAIL_FROM
+        echo ""
+        ;;
+      4)
+        echo "  Circle:"
+        echo "    Get your key at: https://app.circle.so → Settings → API"
+        read -p "    API Key: " CIRCLE_API_KEY
+        if [[ -n "${CIRCLE_API_KEY:-}" ]]; then
+          read -p "    Community ID: " CIRCLE_COMMUNITY_ID
+        fi
+        echo ""
+        ;;
+    esac
+  done
 fi
-echo ""
 
 # ── Write .env ───────────────────────────────────────────────────────────────
 
@@ -68,6 +119,21 @@ SA_STAGING_API_KEY=${SA_STAGING_API_KEY:-}
 
 # Slack Integration (optional)
 SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL:-}
+EOF
+
+# Append extra Slack webhooks if any
+if [[ -n "${SLACK_EXTRA_WEBHOOKS:-}" ]]; then
+  echo -e "$SLACK_EXTRA_WEBHOOKS" >> "$ENV_FILE"
+fi
+
+cat >> "$ENV_FILE" <<EOF
+
+# Discord Integration (optional)
+DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL:-}
+
+# Email Integration — Resend (optional)
+RESEND_API_KEY=${RESEND_API_KEY:-}
+EMAIL_FROM=${EMAIL_FROM:-}
 
 # Circle Community Integration (optional)
 CIRCLE_API_KEY=${CIRCLE_API_KEY:-}
@@ -88,10 +154,10 @@ else
   echo "  Created .gitignore with .env entry"
 fi
 
-# ── Step 4/4: Configure Claude Code MCP servers ─────────────────────────────
+# ── Step 3/3: Configure Claude Code MCP servers ─────────────────────────────
 
 echo ""
-echo "Step 4/4: Configuring Claude Code MCP servers"
+echo "Step 3/3: Configuring Claude Code MCP servers"
 
 # Use python3 for reliable JSON manipulation (jq fallback)
 if command -v python3 &>/dev/null; then

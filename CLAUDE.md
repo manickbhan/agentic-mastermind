@@ -146,7 +146,9 @@ When a user mentions a client or domain, route to the right command based on how
 | "create content" / "write articles" / "build topical map" | **`/run-content`** |
 | "press release" / "build authority" / "link building" | **`/run-pr`** |
 | "check AI visibility" / "LLM audit" | **`/run-visibility`** |
-| "post to Slack" / "share results" | **`/send-slack`** |
+| "post to Slack" / "share results on Slack" | **`/send-slack`** |
+| "post to Discord" / "share on Discord" | **`/send-discord`** |
+| "email the report" / "send an email" | **`/send-email`** |
 | "post to Circle" | **`/send-circle`** |
 
 **Rule of thumb:** If the user is vague about a client, give them the full picture (`/business-report`). If they ask for something specific, don't flood them with everything — just answer what they asked.
@@ -187,7 +189,9 @@ All commands live in `commands/` as markdown files. They are installed to `~/.cl
 | `/run-content` | `commands/run-content.md` | Content generation |
 | `/run-pr` | `commands/run-pr.md` | Press releases |
 | `/run-visibility` | `commands/run-visibility.md` | LLM visibility |
-| `/send-slack` | `commands/send-slack.md` | Slack integration |
+| `/send-slack` | `commands/send-slack.md` | Slack integration (multi-channel) |
+| `/send-discord` | `commands/send-discord.md` | Discord integration |
+| `/send-email` | `commands/send-email.md` | Email via Resend |
 | `/send-circle` | `commands/send-circle.md` | Circle integration |
 | `/help` | `commands/help.md` | Command listing |
 
@@ -195,9 +199,23 @@ All commands live in `commands/` as markdown files. They are installed to `~/.cl
 
 ## 9. Communication Integrations
 
-### Slack
-Uses Incoming Webhooks. The webhook URL is stored in `.env` as `SLACK_WEBHOOK_URL`.
+### Slack (multi-channel)
+Uses Incoming Webhooks. Supports multiple named channels via env var convention:
+- `SLACK_WEBHOOK_URL` — default channel
+- `SLACK_WEBHOOK_{NAME}` — named channels (e.g., `SLACK_WEBHOOK_SEO`, `SLACK_WEBHOOK_PPC`)
+
 Script: `integrations/slack/send-message.sh`
+
+### Discord
+Uses Discord Webhooks. The webhook URL is stored in `.env` as `DISCORD_WEBHOOK_URL`.
+Script: `integrations/discord/send-message.sh`
+
+### Email (Resend)
+Uses the Resend REST API. Free tier: 100 emails/day.
+- `RESEND_API_KEY` — API key from resend.com
+- `EMAIL_FROM` — sender address (must verify domain, or use `onboarding@resend.dev` for testing)
+
+Script: `integrations/email/send-email.sh`
 
 ### Circle
 Uses Circle API v2. API key stored in `.env` as `CIRCLE_API_KEY`.

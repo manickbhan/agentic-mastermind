@@ -17,7 +17,7 @@ bash setup.sh
 
 The setup wizard will:
 - Ask for your SearchAtlas API key (required)
-- Optionally configure Slack and Circle integrations
+- Optionally configure Slack, Discord, Email, and Circle integrations
 - Auto-configure Claude Code MCP servers
 - Install all slash commands
 
@@ -61,10 +61,12 @@ Workflow templates in `workflows/` define step-by-step tool chains:
 - **llm-visibility.yaml** — AI search: visibility, sentiment, SERP analysis
 
 ### 6. Communicate
-Share results with clients via Slack or Circle.
+Share results with clients via Slack, Discord, Email, or Circle.
 
 ```
-/send-slack          # Post to a Slack channel via webhook
+/send-slack          # Post to Slack (supports multiple channels)
+/send-discord        # Post to Discord via webhook
+/send-email          # Send an email via Resend API
 /send-circle         # Post to a Circle community space
 ```
 
@@ -81,7 +83,9 @@ Share results with clients via Slack or Circle.
 | `/run-content` | Generate articles, topical maps, content briefs |
 | `/run-pr` | Create and distribute press releases |
 | `/run-visibility` | Run LLM visibility and sentiment analysis |
-| `/send-slack` | Post a message to Slack via webhook |
+| `/send-slack` | Post to Slack (supports multiple channels) |
+| `/send-discord` | Post to Discord via webhook |
+| `/send-email` | Send an email via Resend API |
 | `/send-circle` | Post to a Circle community space |
 | `/help` | List all available commands |
 

@@ -25,7 +25,9 @@ Display this command reference to the user:
   /run-visibility      LLM visibility and sentiment analysis
 
 💬 COMMUNICATION
-  /send-slack          Post a message to Slack via webhook
+  /send-slack          Post to Slack (supports multiple channels)
+  /send-discord        Post to Discord via webhook
+  /send-email          Send an email via Resend API
   /send-circle         Post to a Circle community space
 
 ❓ HELP
